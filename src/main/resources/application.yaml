@@ -1,0 +1,22 @@
+# TODO: add other services
+server:
+  port: 8088
+
+routes:
+  courier: http://localhost:8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: courier-route
+            uri: ${routes.courier}
+            predicates:
+              - Path=/couriers/**
+          - id: delivery-route
+            uri: ${routes.courier}
+            predicates:
+              - Path=/delivery-tasks
