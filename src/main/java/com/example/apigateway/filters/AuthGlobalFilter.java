@@ -21,33 +21,30 @@ public class AuthGlobalFilter implements GlobalFilter {
 
     private final WebClient authWebClient;
 
-    private List<String> excludedPaths;
-
-    @Value("${excluded.paths}")
-    public void setExcludedPaths(List<String> excludedPaths) {
-        this.excludedPaths = excludedPaths;
-    }
+    private final List<String> excludedPaths = List.of("/api/auth");
+//    TODO: take values from application.properties
+//    @Value("${excluded.paths}")
+//    public void setExcludedPaths(List<String> excludedPaths) {
+//        this.excludedPaths = excludedPaths;
+//    }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String token = exchange.getRequest()
-                .getHeaders()
-                .getFirst(HttpHeaders.AUTHORIZATION);
+   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getPath().value();
+        log.info("Path: {}", path);
+
         boolean isExcluded = excludedPaths.stream().anyMatch(path::startsWith);
         if (isExcluded) {
-            log.debug("Path {} is excluded from AuthGlobalFilter. Skipping token validation.", path);
-            return chain.filter(exchange); // Pass through without authentication for excluded paths
+            log.info("Path {} is excluded — skipping auth", path);
+            return chain.filter(exchange);
         }
-        if (token == null) {
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
-        }
+
+        HttpHeaders incoming = exchange.getRequest().getHeaders();
 
         return authWebClient
                 .get()
                 .uri("/api/auth/me")
-                .header(HttpHeaders.AUTHORIZATION, token)
+                .headers(headers -> headers.addAll(incoming))
                 .retrieve()
                 .onStatus(status -> status != HttpStatus.OK,
                         resp -> Mono.error(new RuntimeException("Unauthorized")))
@@ -59,4 +56,5 @@ public class AuthGlobalFilter implements GlobalFilter {
                     return exchange.getResponse().setComplete();
                 });
     }
+
 }
