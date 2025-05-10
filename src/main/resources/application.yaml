@@ -1,0 +1,75 @@
+# TODO: check remaining controllers in every service
+server:
+  port: 8088
+
+routes:
+  auth: http://localhost:8080
+  courier: http://localhost:8081
+  warehouse: http://localhost:8082
+  erp: http://localhost:8083
+  order: http://localhost:8084
+  cart: http://localhost:8085
+
+excluded:
+  paths:
+    - /api/auth/
+
+
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: courier-route
+          uri: ${routes.courier}
+          predicates:
+            - Path=/couriers/**
+          filters:
+            - PrefixPath=/api
+        - id: delivery-route
+          uri: ${routes.courier}
+          predicates:
+            - Path=/delivery-tasks/**
+          filters:
+            - PrefixPath=/api
+        - id: warehouse-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/warehouse/**
+          filters:
+            - PrefixPath=/api
+        - id: cart-route
+          uri: ${routes.cart}
+          predicates:
+            - Path=/carts/**
+          filters:
+            - PrefixPath=/api
+        - id: order-route
+          uri: ${routes.order}
+          predicates:
+            - Path=/orders/**
+          filters:
+            - PrefixPath=/api
+        - id: user-route
+          uri: ${routes.auth}
+          predicates:
+            - Path=/users/**
+          filters:
+            - PrefixPath=/api
+        - id: admin-route
+          uri: ${routes.auth}
+          predicates:
+            - Path=/admins/**
+          filters:
+            - PrefixPath=/api
+        - id: auth-route
+          uri: ${routes.auth}
+          predicates:
+            - Path=/auth/**
+          filters:
+            - PrefixPath=/api
+
+
+
