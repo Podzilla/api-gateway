@@ -11,6 +11,8 @@ routes:
   cart: http://localhost:8085
 
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: api-gateway
   cloud:
