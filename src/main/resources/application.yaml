@@ -10,12 +10,6 @@ routes:
   order: http://localhost:8084
   cart: http://localhost:8085
 
-excluded:
-  paths:
-    - /api/auth/
-
-
-
 spring:
   application:
     name: api-gateway
@@ -25,51 +19,35 @@ spring:
         - id: courier-route
           uri: ${routes.courier}
           predicates:
-            - Path=/couriers/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/couriers/**
         - id: delivery-route
           uri: ${routes.courier}
           predicates:
-            - Path=/delivery-tasks/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/delivery-tasks/**
         - id: warehouse-route
           uri: ${routes.warehouse}
           predicates:
-            - Path=/warehouse/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/warehouse/**
         - id: cart-route
           uri: ${routes.cart}
           predicates:
-            - Path=/carts/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/carts/**
         - id: order-route
           uri: ${routes.order}
           predicates:
-            - Path=/orders/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/orders/**
         - id: user-route
           uri: ${routes.auth}
           predicates:
-            - Path=/users/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/users/**
         - id: admin-route
           uri: ${routes.auth}
           predicates:
-            - Path=/admins/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/admins/**
         - id: auth-route
           uri: ${routes.auth}
           predicates:
-            - Path=/auth/**
-          filters:
-            - PrefixPath=/api
+            - Path=/api/auth/**
 
 
 
