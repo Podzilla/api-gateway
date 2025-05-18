@@ -82,8 +82,10 @@ public class AuthGlobalFilter implements GlobalFilter {
                     HttpHeaders authHeaders = authResponseEntity.getHeaders();
                     String userRoles = authHeaders.getFirst("X-User-Roles");
                     String userEmail = authHeaders.getFirst("X-User-Email");
+                    String userId = authHeaders.getFirst("X-User-Id");
 
-                    log.debug("Extracted headers - X-User-Roles: {}, X-User-Email: {}", userRoles, userEmail);
+                    log.debug("Extracted headers - X-User-Roles: {}, X-User-Email: {}, X-User-Id: {}", userRoles,
+                            userEmail, userId);
 
                     // 4. Mutate the original request to add the extracted headers
                     ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
@@ -94,6 +96,9 @@ public class AuthGlobalFilter implements GlobalFilter {
                                 }
                                 if (userEmail != null) {
                                     headers.add("X-User-Email", userEmail);
+                                }
+                                if (userId != null) {
+                                    headers.add("X-User-Id", userId);
                                 }
                                 // You could potentially add other headers here if needed
                             })
