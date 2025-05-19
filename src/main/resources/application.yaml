@@ -1,4 +1,3 @@
-# TODO: check remaining controllers in every service
 server:
   port: 8088
 
@@ -26,10 +25,30 @@ spring:
           uri: ${routes.courier}
           predicates:
             - Path=/api/delivery-tasks/**
-        - id: warehouse-route
+        - id: packagers-route
           uri: ${routes.warehouse}
           predicates:
-            - Path=/api/warehouse/**
+            - Path=/api/packagers/**
+        - id: assign-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/assign/**
+        - id: seed-route
+          uri: ${routes.warehouse}
+          predicates:
+              - Path=/api/seed/**
+        - id: warehouse-manager-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/warehouse/manager/**
+        - id: package-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/package/**
+        - id: stock-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/stock/**
         - id: cart-route
           uri: ${routes.cart}
           predicates:
@@ -41,15 +60,48 @@ spring:
         - id: user-route
           uri: ${routes.auth}
           predicates:
-            - Path=/api/users/**
+            - Path=/api/user/**
         - id: admin-route
           uri: ${routes.auth}
           predicates:
-            - Path=/api/admins/**
+            - Path=/api/admin/**
         - id: auth-route
           uri: ${routes.auth}
           predicates:
             - Path=/api/auth/**
+        - id: courier-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/courier-analytics/**
+        - id: customer-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/customer-analytics/**
+        - id: fulfillment-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/fulfillment-analytics/**
+        - id: inventory-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/inventory-analytics/**
+        - id: order-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/order-analytics/**
+        - id: product-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/product-analytics/**
+        - id: profit-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/profit-analytics/**
+        - id: revenue-analytics-route
+          uri: ${routes.erp}
+          predicates:
+            - Path=/api/revenue-analytics/**
+
 
 
 
