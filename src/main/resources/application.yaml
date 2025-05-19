@@ -25,10 +25,30 @@ spring:
           uri: ${routes.courier}
           predicates:
             - Path=/api/delivery-tasks/**
-        - id: warehouse-route
+        - id: packagers-route
           uri: ${routes.warehouse}
           predicates:
-            - Path=/api/warehouse/**
+            - Path=/api/packagers/**
+        - id: assign-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/assign/**
+        - id: seed-route
+          uri: ${routes.warehouse}
+          predicates:
+              - Path=/api/seed/**
+        - id: warehouse-manager-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/warehouse/manager/**
+        - id: package-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/package/**
+        - id: stock-route
+          uri: ${routes.warehouse}
+          predicates:
+            - Path=/api/stock/**
         - id: cart-route
           uri: ${routes.cart}
           predicates:
