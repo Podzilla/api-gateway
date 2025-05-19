@@ -60,11 +60,11 @@ spring:
         - id: user-route
           uri: ${routes.auth}
           predicates:
-            - Path=/api/users/**
+            - Path=/api/user/**
         - id: admin-route
           uri: ${routes.auth}
           predicates:
-            - Path=/api/admins/**
+            - Path=/api/admin/**
         - id: auth-route
           uri: ${routes.auth}
           predicates:
